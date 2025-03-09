@@ -8,6 +8,9 @@ We want to build a simple TD game where the enemies will have to go through a ma
 
 - [ ] Setup HTML Canvas
 - [ ] Create core game loop
+- [ ] Create Menu screen
+- [ ] Create Game screen
+- [ ] Create End screen
 - [ ] Create basic enemy
 - [ ] Create movement for enemy to go to the end of the maze
 - [ ] Create basic tower
