@@ -1,3 +1,31 @@
+import { GAME_STATES } from "@enums";
+
+
+const buttons = [
+  {
+    x: 150,
+    y: 200,
+    width: 200,
+    height: 50,
+    text: "Start Game",
+    fn: () => GAME_STATES.GAME,
+  }
+]
+
+const handleClick = (x, y) => {
+  for (const button of buttons) {
+    if (
+      x >= button.x && 
+      x <= button.x + button.width && 
+      y >= button.y && 
+      y <= button.y + button.height
+    ) {
+      return button.fn()
+    }
+  }
+  return null;
+}
+
 const drawScreen = (ctx) => {
   ctx.fillStyle = "#12263A";
   ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
@@ -6,8 +34,17 @@ const drawScreen = (ctx) => {
   ctx.font = "40px Arial";
   ctx.fillText("🕹️ Figgy TD", 200, 150);
 
-  ctx.font = "20px Arial";
-  ctx.fillText("Click to Start", 300, 300);
+  buttons.forEach(button => {
+    ctx.fillStyle = "#555";
+    ctx.fillRect(button.x, button.y, button.width, button.height);
+    
+    ctx.fillStyle = "#fff";
+    ctx.font = "20px Arial";
+    ctx.textAlign = "center";
+    ctx.fillText(button.text, button.x + button.width / 2, button.y + button.height / 2 + 7);
+  });
 };
 
-export default { drawScreen };
+
+
+export default { drawScreen, handleClick };
