@@ -1,3 +1,4 @@
 import menu from "./menu";
+import game from "./game";
 
-export { menu };
+export { game, menu };
