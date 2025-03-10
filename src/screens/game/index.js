@@ -1,42 +1,62 @@
+import { drawBackground, drawEnemies, drawHUD } from "./renderers";
+
 const initialGameState = {
-  enemy: {
-    x: 800,
-    y: 150,
-    width: 30,
-    height: 30,
-    speed: 100, // pixels per second
-  },
+  enemies: [
+    {
+      color: "red",
+      x: 800,
+      y: 150,
+      width: 30,
+      height: 30,
+      speed: 140,
+    },
+    {
+      color: "orange",
+      x: 800,
+      y: 200,
+      width: 30,
+      height: 30,
+      speed: 90,
+    },
+    {
+      color: "yellow",
+      x: 800,
+      y: 250,
+      width: 30,
+      height: 30,
+      speed: 100,
+    },
+    {
+      color: "green",
+      x: 800,
+      y: 350,
+      width: 30,
+      height: 30,
+      speed: 1000,
+    },
+  ],
 };
 
+const pipe =
+  (...fns) =>
+  (ctx) =>
+    fns.forEach((fn) => fn(ctx));
+
 const drawScreen = (ctx, gameState) => {
-  ctx.fillStyle = "#12263A";
-  ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-
-  ctx.fillStyle = "white";
-  ctx.font = "40px Arial";
-  ctx.fillText("THIS IS THE GAME", 200, 150);
-
-  // Draw enemy
-  ctx.fillStyle = "red";
-  ctx.fillRect(gameState.enemy.x, gameState.enemy.y, gameState.enemy.width, gameState.enemy.height);
+  pipe(drawBackground, drawHUD, drawEnemies)({ canvas: { ctx }, gameState });
 };
 
 const update = ({ ctx, gameState, deltaTime }) => {
   const secondsPassed = deltaTime / 1000;
-  const enemyDistanceMoved = gameState.enemy.speed * secondsPassed;
+  const newEnemies = gameState.enemies.map((enemy) => {
+    const newEnemy = {
+      ...enemy,
+      x: enemy.x - enemy.speed * secondsPassed,
+    };
 
-  const newEnemy = {
-    ...gameState.enemy,
-    x: gameState.enemy.x - enemyDistanceMoved,
-  };
-
-  // If enemy moves off screen, reset position to right side
-  const resetEnemy = newEnemy.x < -newEnemy.width ? { ...newEnemy, x: ctx.canvas.width } : newEnemy;
-
-  return {
-    ...gameState,
-    enemy: resetEnemy,
-  };
+    return newEnemy;
+  });
+  return { ...gameState, enemies: newEnemies };
 };
 
 let gameState = initialGameState;
@@ -45,11 +65,6 @@ export default {
   drawScreen: (ctx) => drawScreen(ctx, gameState),
   update: ({ deltaTime, ctx }) => {
     gameState = update({ ctx, deltaTime, gameState });
-    return gameState;
-  },
-  getState: () => gameState,
-  resetState: () => {
-    gameState = initialGameState;
     return gameState;
   },
 };

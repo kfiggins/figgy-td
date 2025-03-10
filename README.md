@@ -7,7 +7,9 @@ We want to build a simple TD game where the enemies will have to go through a ma
 # TODO
 
 - [&check;] Setup HTML Canvas
-- [ ] Enemies spawn at start and move to end.
+- [&check;] Render enemies spawn at start and move to end.
+- [] Spawn enemies at regular intervals
+- [ ] Create a grid
 - [ ] Create core game loop
 - [ ] Create Menu screen
 - [ ] Create Game screen

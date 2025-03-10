@@ -24,7 +24,7 @@ const handleClick = (state, x, y) => {
   }
 };
 
-const updateState = (state, deltaTime) => {
+const updateState = (state) => {
   switch (state.currentState) {
     case GAME_STATES.MENU:
       return { ...state };
