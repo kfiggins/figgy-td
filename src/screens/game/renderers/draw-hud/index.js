@@ -4,5 +4,5 @@ export default (context) => {
   } = context;
   ctx.fillStyle = "white";
   ctx.font = "40px Arial";
-  ctx.fillText("THIS IS THE GAME", 200, 150);
+  ctx.fillText("THIS IS THE GAME", 200, 50);
 };

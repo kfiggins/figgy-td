@@ -1,4 +1,5 @@
-import { drawBackground, drawEnemies, drawHUD } from "./renderers";
+import { drawBackground, drawEnemies, drawHUD, drawTiles } from "./renderers";
+import getTiles  from "./tiles";
 
 // Could make the interval a function to speed up timer depending on game level
 const makeTimer = (interval) => {
@@ -54,6 +55,7 @@ const initialGameState = {
       speed: 200,
     },
   ],
+  tiles: getTiles()
 };
 
 const pipe =
@@ -62,7 +64,7 @@ const pipe =
     fns.forEach((fn) => fn(ctx));
 
 const drawScreen = (ctx, gameState) => {
-  pipe(drawBackground, drawHUD, drawEnemies)({ canvas: { ctx }, gameState });
+  pipe(drawBackground, drawTiles, drawEnemies, drawHUD)({ canvas: { ctx }, gameState });
 };
 
 const update = ({ ctx, gameState, deltaTime }) => {
