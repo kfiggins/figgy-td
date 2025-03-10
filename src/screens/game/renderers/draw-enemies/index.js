@@ -4,7 +4,7 @@ export default (context) => {
     gameState,
   } = context;
 
-  gameState.enemies.forEach((enemy) => {
+  gameState.liveEnemies.forEach((enemy) => {
     ctx.fillStyle = enemy.color;
     ctx.fillRect(enemy.x, enemy.y, enemy.width, enemy.height);
   });

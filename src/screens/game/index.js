@@ -1,7 +1,26 @@
 import { drawBackground, drawEnemies, drawHUD } from "./renderers";
 
+// Could make the interval a function to speed up timer depending on game level
+const makeTimer = (interval) => {
+  let elapsed = 0;
+
+  return (deltaTime) => {
+    elapsed += deltaTime;
+    
+    if (elapsed >= interval) {
+      elapsed -= interval;
+      return true;
+    }
+    
+    return false;
+  };
+}
+
 const initialGameState = {
-  enemies: [
+  enemySpawnTimer: makeTimer(1000),
+  liveEnemies: [
+  ],
+  queueEnemies: [
     {
       color: "red",
       x: 800,
@@ -32,7 +51,7 @@ const initialGameState = {
       y: 350,
       width: 30,
       height: 30,
-      speed: 1000,
+      speed: 200,
     },
   ],
 };
@@ -48,7 +67,19 @@ const drawScreen = (ctx, gameState) => {
 
 const update = ({ ctx, gameState, deltaTime }) => {
   const secondsPassed = deltaTime / 1000;
-  const newEnemies = gameState.enemies.map((enemy) => {
+
+  const spawnEnemy = (dTime) => {
+    if (gameState.enemySpawnTimer(dTime)) {
+      const newEnemy = gameState.queueEnemies.shift()
+      if (newEnemy) {
+        gameState.liveEnemies.push(newEnemy)
+      }
+    }
+  }
+
+  spawnEnemy(deltaTime)
+
+  const newEnemies = gameState.liveEnemies.map((enemy) => {
     const newEnemy = {
       ...enemy,
       x: enemy.x - enemy.speed * secondsPassed,
@@ -56,7 +87,7 @@ const update = ({ ctx, gameState, deltaTime }) => {
 
     return newEnemy;
   });
-  return { ...gameState, enemies: newEnemies };
+  return { ...gameState, liveEnemies: newEnemies };
 };
 
 let gameState = initialGameState;
