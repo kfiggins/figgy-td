@@ -1,26 +1,10 @@
+import { makeTimer, pipe } from "./helpers";
 import { drawBackground, drawEnemies, drawHUD, drawTiles } from "./renderers";
-import getTiles  from "./tiles";
-
-// Could make the interval a function to speed up timer depending on game level
-const makeTimer = (interval) => {
-  let elapsed = 0;
-
-  return (deltaTime) => {
-    elapsed += deltaTime;
-    
-    if (elapsed >= interval) {
-      elapsed -= interval;
-      return true;
-    }
-    
-    return false;
-  };
-}
+import getTiles from "./tiles";
 
 const initialGameState = {
   enemySpawnTimer: makeTimer(1000),
-  liveEnemies: [
-  ],
+  liveEnemies: [],
   queueEnemies: [
     {
       color: "red",
@@ -55,13 +39,8 @@ const initialGameState = {
       speed: 200,
     },
   ],
-  tiles: getTiles()
+  tiles: getTiles(),
 };
-
-const pipe =
-  (...fns) =>
-  (ctx) =>
-    fns.forEach((fn) => fn(ctx));
 
 const drawScreen = (ctx, gameState) => {
   pipe(drawBackground, drawTiles, drawEnemies, drawHUD)({ canvas: { ctx }, gameState });
@@ -72,14 +51,14 @@ const update = ({ ctx, gameState, deltaTime }) => {
 
   const spawnEnemy = (dTime) => {
     if (gameState.enemySpawnTimer(dTime)) {
-      const newEnemy = gameState.queueEnemies.shift()
+      const newEnemy = gameState.queueEnemies.shift();
       if (newEnemy) {
-        gameState.liveEnemies.push(newEnemy)
+        gameState.liveEnemies.push(newEnemy);
       }
     }
-  }
+  };
 
-  spawnEnemy(deltaTime)
+  spawnEnemy(deltaTime);
 
   const newEnemies = gameState.liveEnemies.map((enemy) => {
     const newEnemy = {
