@@ -19,37 +19,39 @@ const makeTimer = (interval) => {
 
 const initialGameState = {
   enemySpawnTimer: makeTimer(1000),
+  spawnLocation: { x: 135, y: 135 },
+  endLocation: { x: 835, y: 635 },
   liveEnemies: [
   ],
   queueEnemies: [
     {
       color: "red",
-      x: 800,
-      y: 150,
+      x: 135,
+      y: 135,
       width: 30,
       height: 30,
       speed: 140,
     },
     {
       color: "orange",
-      x: 800,
-      y: 200,
+      x: 135,
+      y: 135,
       width: 30,
       height: 30,
       speed: 90,
     },
     {
       color: "yellow",
-      x: 800,
-      y: 250,
+      x: 135,
+      y: 135,
       width: 30,
       height: 30,
       speed: 100,
     },
     {
       color: "green",
-      x: 800,
-      y: 350,
+      x: 135,
+      y: 135,
       width: 30,
       height: 30,
       speed: 200,
@@ -81,13 +83,29 @@ const update = ({ ctx, gameState, deltaTime }) => {
 
   spawnEnemy(deltaTime)
 
-  const newEnemies = gameState.liveEnemies.map((enemy) => {
-    const newEnemy = {
-      ...enemy,
-      x: enemy.x - enemy.speed * secondsPassed,
-    };
+  const newEnemies = []
 
-    return newEnemy;
+  gameState.liveEnemies.forEach((enemy) => {
+
+    const directionX = gameState.endLocation.x - enemy.x;
+    const directionY = gameState.endLocation.y - enemy.y;
+
+    const distanceToTarget = Math.sqrt(directionX * directionX + directionY * directionY);
+
+    if (distanceToTarget < 30) {
+      return;
+    }
+
+    let moveDistance = enemy.speed * secondsPassed;
+
+    const moveX = (directionX / distanceToTarget) * moveDistance;
+    const moveY = (directionY / distanceToTarget) * moveDistance;
+
+    newEnemies.push({
+      ...enemy,
+      x: enemy.x + moveX,
+      y: enemy.y + moveY
+    });
   });
   return { ...gameState, liveEnemies: newEnemies };
 };
