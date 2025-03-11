@@ -4,4 +4,5 @@ export default (context) => {
   } = context;
   ctx.fillStyle = "#12263A";
   ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+  return context;
 };

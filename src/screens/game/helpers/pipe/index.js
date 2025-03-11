@@ -1,3 +1,3 @@
 export default (...fns) =>
-  (ctx) =>
-    fns.forEach((fn) => fn(ctx));
+  (initialValue) =>
+    fns.reduce((value, fn) => fn(value), initialValue);

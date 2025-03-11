@@ -8,4 +8,6 @@ export default (context) => {
     ctx.fillStyle = enemy.color;
     ctx.fillRect(enemy.x, enemy.y, enemy.width, enemy.height);
   });
+
+  return context;
 };

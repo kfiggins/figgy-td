@@ -1,8 +1,8 @@
 import { makeTimer, pipe } from "./helpers";
-import { drawBackground, drawEnemies, drawHUD, drawTiles } from "./renderers";
+import { drawBackground, drawTiles, drawEnemies, drawHUD } from "./renderers";
 import getTiles from "./tiles";
 
-const initialGameState = {
+const createInitialGameState = () => ({
   enemySpawnTimer: makeTimer(1000),
   liveEnemies: [],
   queueEnemies: [
@@ -40,43 +40,66 @@ const initialGameState = {
     },
   ],
   tiles: getTiles(),
-};
+});
 
 const drawScreen = (ctx, gameState) => {
-  pipe(drawBackground, drawTiles, drawEnemies, drawHUD)({ canvas: { ctx }, gameState });
+  const context = { canvas: { ctx }, gameState };
+
+  pipe(drawBackground, drawTiles, drawEnemies, drawHUD)(context);
 };
 
-const update = ({ ctx, gameState, deltaTime }) => {
+const spawnEnemies = (context) => {
+  const { enemySpawnTimer, queueEnemies, liveEnemies, deltaTime } = context;
+
+  const shouldSpawn = enemySpawnTimer(deltaTime);
+
+  if (shouldSpawn && queueEnemies.length > 0) {
+    const [newEnemy, ...remainingQueue] = queueEnemies;
+
+    return { ...context, queueEnemies: remainingQueue, liveEnemies: [...liveEnemies, newEnemy] };
+  }
+  return context;
+};
+
+const moveEnemies = (context) => {
+  const { deltaTime, liveEnemies } = context;
   const secondsPassed = deltaTime / 1000;
 
-  const spawnEnemy = (dTime) => {
-    if (gameState.enemySpawnTimer(dTime)) {
-      const newEnemy = gameState.queueEnemies.shift();
-      if (newEnemy) {
-        gameState.liveEnemies.push(newEnemy);
-      }
-    }
+  const updatedEnemies = liveEnemies.map((enemy) => ({
+    ...enemy,
+    x: enemy.x - enemy.speed * secondsPassed,
+  }));
+
+  return { ...context, liveEnemies: updatedEnemies };
+};
+
+const removeOffscreenEnemies = (context) => {
+  const { liveEnemies } = context;
+
+  const visibleEnemies = liveEnemies.filter((enemy) => enemy.x + enemy.width > 0);
+
+  return { ...context, liveEnemies: visibleEnemies };
+};
+
+const update = (context) => {
+  return pipe(spawnEnemies, moveEnemies, removeOffscreenEnemies)(context);
+};
+
+const gameEngine = (() => {
+  let currentState = createInitialGameState();
+
+  return {
+    getState: () => JSON.parse(JSON.stringify(currentState)),
+    resetGame: () => {
+      currentState = createInitialGameState();
+      return gameEngine.getState();
+    },
+    drawScreen: (ctx) => drawScreen(ctx, currentState),
+    update: ({ deltaTime, ctx }) => {
+      currentState = update({ ...currentState, deltaTime });
+      return gameEngine.getState();
+    },
   };
+})();
 
-  spawnEnemy(deltaTime);
-
-  const newEnemies = gameState.liveEnemies.map((enemy) => {
-    const newEnemy = {
-      ...enemy,
-      x: enemy.x - enemy.speed * secondsPassed,
-    };
-
-    return newEnemy;
-  });
-  return { ...gameState, liveEnemies: newEnemies };
-};
-
-let gameState = initialGameState;
-
-export default {
-  drawScreen: (ctx) => drawScreen(ctx, gameState),
-  update: ({ deltaTime, ctx }) => {
-    gameState = update({ ctx, deltaTime, gameState });
-    return gameState;
-  },
-};
+export default gameEngine;
