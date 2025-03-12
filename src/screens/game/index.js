@@ -3,40 +3,42 @@ import { drawBackground, drawTiles, drawEnemies, drawHUD } from "./renderers";
 import getTiles from "./tiles";
 import { moveEnemies, removeOffscreenEnemies, spawnEnemies } from "./transformers";
 
+const spawnLocation = { x: 135, y: 135 }
+
 const createInitialGameState = () => ({
   enemySpawnTimer: makeTimer(1000),
-  spawnLocation: { x: 135, y: 135 },
+  spawnLocation,
   endLocation: { x: 835, y: 635 },
   liveEnemies: [],
   queueEnemies: [
     {
       color: "red",
-      x: 135,
-      y: 135,
+      x: spawnLocation.x,
+      y: spawnLocation.y,
       width: 30,
       height: 30,
       speed: 140,
     },
     {
       color: "orange",
-      x: 135,
-      y: 135,
+      x: spawnLocation.x,
+      y: spawnLocation.y,
       width: 30,
       height: 30,
       speed: 90,
     },
     {
       color: "yellow",
-      x: 135,
-      y: 135,
+      x: spawnLocation.x,
+      y: spawnLocation.y,
       width: 30,
       height: 30,
       speed: 100,
     },
     {
       color: "green",
-      x: 135,
-      y: 135,
+      x: spawnLocation.x,
+      y: spawnLocation.y,
       width: 30,
       height: 30,
       speed: 200,
