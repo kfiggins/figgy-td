@@ -3,10 +3,10 @@ export default (context) => {
     canvas: { ctx },
     gameState,
   } = context;
-  
-  const size = 100
-  const startX = 100
-  const startY = 100
+
+  const size = 100;
+  const startX = 100;
+  const startY = 100;
   ctx.beginPath();
   gameState.tiles.forEach((row, rowIndex) => {
     row.forEach((tile, colIndex) => {
@@ -15,9 +15,11 @@ export default (context) => {
       const y = rowIndex * size + startY;
       ctx.fillRect(x, y, size, size);
       ctx.rect(x, y, size, size);
-    })
+    });
   });
 
   ctx.strokeStyle = "black";
   ctx.stroke();
+
+  return context;
 };

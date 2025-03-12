@@ -1,28 +1,13 @@
-import { drawBackground, drawEnemies, drawHUD, drawTiles } from "./renderers";
-import getTiles  from "./tiles";
+import { makeTimer, pipe } from "./helpers";
+import { drawBackground, drawTiles, drawEnemies, drawHUD } from "./renderers";
+import getTiles from "./tiles";
+import { moveEnemies, removeOffscreenEnemies, spawnEnemies } from "./transformers";
 
-// Could make the interval a function to speed up timer depending on game level
-const makeTimer = (interval) => {
-  let elapsed = 0;
-
-  return (deltaTime) => {
-    elapsed += deltaTime;
-    
-    if (elapsed >= interval) {
-      elapsed -= interval;
-      return true;
-    }
-    
-    return false;
-  };
-}
-
-const initialGameState = {
+const createInitialGameState = () => ({
   enemySpawnTimer: makeTimer(1000),
   spawnLocation: { x: 135, y: 135 },
   endLocation: { x: 835, y: 635 },
-  liveEnemies: [
-  ],
+  liveEnemies: [],
   queueEnemies: [
     {
       color: "red",
@@ -57,65 +42,32 @@ const initialGameState = {
       speed: 200,
     },
   ],
-  tiles: getTiles()
+  tiles: getTiles(),
+});
+
+const drawScreen = (context) => {
+  pipe(drawBackground, drawTiles, drawEnemies, drawHUD)(context);
 };
 
-const pipe =
-  (...fns) =>
-  (ctx) =>
-    fns.forEach((fn) => fn(ctx));
-
-const drawScreen = (ctx, gameState) => {
-  pipe(drawBackground, drawTiles, drawEnemies, drawHUD)({ canvas: { ctx }, gameState });
+const update = (context) => {
+  return pipe(spawnEnemies, moveEnemies, removeOffscreenEnemies)(context);
 };
 
-const update = ({ ctx, gameState, deltaTime }) => {
-  const secondsPassed = deltaTime / 1000;
+const gameEngine = (() => {
+  let currentState = createInitialGameState();
 
-  const spawnEnemy = (dTime) => {
-    if (gameState.enemySpawnTimer(dTime)) {
-      const newEnemy = gameState.queueEnemies.shift()
-      if (newEnemy) {
-        gameState.liveEnemies.push(newEnemy)
-      }
-    }
-  }
+  return {
+    getState: () => JSON.parse(JSON.stringify(currentState)),
+    resetGame: () => {
+      currentState = createInitialGameState();
+      return gameEngine.getState();
+    },
+    drawScreen: (ctx) => drawScreen({ canvas: { ctx }, gameState: currentState }),
+    update: ({ deltaTime, ctx }) => {
+      currentState = update({ ...currentState, deltaTime });
+      return gameEngine.getState();
+    },
+  };
+})();
 
-  spawnEnemy(deltaTime)
-
-  const newEnemies = []
-
-  gameState.liveEnemies.forEach((enemy) => {
-
-    const directionX = gameState.endLocation.x - enemy.x;
-    const directionY = gameState.endLocation.y - enemy.y;
-
-    const distanceToTarget = Math.sqrt(directionX * directionX + directionY * directionY);
-
-    if (distanceToTarget < 30) {
-      return;
-    }
-
-    let moveDistance = enemy.speed * secondsPassed;
-
-    const moveX = (directionX / distanceToTarget) * moveDistance;
-    const moveY = (directionY / distanceToTarget) * moveDistance;
-
-    newEnemies.push({
-      ...enemy,
-      x: enemy.x + moveX,
-      y: enemy.y + moveY
-    });
-  });
-  return { ...gameState, liveEnemies: newEnemies };
-};
-
-let gameState = initialGameState;
-
-export default {
-  drawScreen: (ctx) => drawScreen(ctx, gameState),
-  update: ({ deltaTime, ctx }) => {
-    gameState = update({ ctx, deltaTime, gameState });
-    return gameState;
-  },
-};
+export default gameEngine;
