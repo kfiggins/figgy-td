@@ -9,13 +9,13 @@ We want to build a simple TD game where the enemies will have to go through a ma
 - [&check;] Setup HTML Canvas
 - [&check;] Render enemies spawn at start and move to end.
 - [&check;] Spawn enemies at regular intervals
-- [ ] Create a grid
-- [ ] Create core game loop
-- [ ] Create Menu screen
-- [ ] Create Game screen
+- [&check;] Create a grid
+- [&check;] Create core game loop
+- [&check;] Create Menu screen
+- [&check;] Create Game screen
 - [ ] Create End screen
-- [ ] Create basic enemy
-- [ ] Create movement for enemy to go to the end of the maze
+- [&check;] Create basic enemy
+- [&check;] Create movement for enemy to go to the end of the maze
 - [ ] Create basic tower
 - [ ] Create tower placement
 - [ ] Create tower attack on enemy in range
