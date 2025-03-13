@@ -13,12 +13,15 @@ const handleClick = (state, x, y) => {
   switch (state.screen) {
     case GAME_STATES.MENU:
       const newScreen = menu.handleClick(x, y);
-      return newScreen ? { ...state, screen: newScreen } : state;
+      gameState = newScreen ? { ...state, screen: newScreen } : state;
+      break;
     case GAME_STATES.GAME:
+      game.handleClick(x, y);
+      break;
     case GAME_STATES.GAME_OVER:
-      return state;
+      break;
     default:
-      return state;
+      break;
   }
 };
 
@@ -59,14 +62,7 @@ canvas.addEventListener("click", (event) => {
   const rect = canvas.getBoundingClientRect();
   const x = event.clientX - rect.left;
   const y = event.clientY - rect.top;
-  game.handleClick(x, y);
-});
-
-canvas.addEventListener("click", (event) => {
-  const rect = canvas.getBoundingClientRect();
-  const x = event.clientX - rect.left;
-  const y = event.clientY - rect.top;
-  gameState = handleClick(gameState, x, y);
+  handleClick(gameState, x, y);
 });
 
 requestAnimationFrame(gameLoop);
