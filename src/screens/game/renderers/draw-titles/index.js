@@ -4,15 +4,16 @@ export default (context) => {
     gameState,
   } = context;
 
-  const size = 100;
-  const startX = 100;
-  const startY = 100;
+  const { tiles, size, boardPadding } = gameState.board;
+
   ctx.beginPath();
-  gameState.tiles.forEach((row, rowIndex) => {
+  tiles.forEach((row, rowIndex) => {
     row.forEach((tile, colIndex) => {
-      ctx.fillStyle = tile.backgroundColor;
-      const x = colIndex * size + startX;
-      const y = rowIndex * size + startY;
+      const tileData = mapTileType[tile.type];
+
+      ctx.fillStyle = tileData.backgroundColor;
+      const x = colIndex * size + boardPadding;
+      const y = rowIndex * size + boardPadding;
       ctx.fillRect(x, y, size, size);
       ctx.rect(x, y, size, size);
     });
@@ -22,4 +23,39 @@ export default (context) => {
   ctx.stroke();
 
   return context;
+};
+
+const tile = {
+  type: "normal",
+  backgroundColor: "blue",
+  img: null,
+  isOpen: true,
+};
+
+const startTile = {
+  type: "start",
+  backgroundColor: "pink",
+  img: null,
+  isOpen: true,
+};
+
+const endTile = {
+  type: "end",
+  backgroundColor: "gray",
+  img: null,
+  isOpen: true,
+};
+
+const towerTile = {
+  type: "tower",
+  backgroundColor: "orange",
+  img: null,
+  isOpen: true,
+};
+
+const mapTileType = {
+  tile: tile,
+  start: startTile,
+  end: endTile,
+  tower: towerTile,
 };

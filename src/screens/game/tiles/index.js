@@ -1,31 +1,25 @@
 export default () => {
-  const tile = {
-    type: "normal",
-    backgroundColor: "blue",
-    img: null,
-    isOpen: true,
-  };
+  const size = 50;
+  const numberOfRows = 12;
+  const numberOfCols = 16;
+  const startLocation = { row: 0, col: 0 };
+  const endLocation = { row: 11, col: 15 };
+  const boardPadding = 100;
 
-  const startTile = {
-    type: "start",
-    backgroundColor: "pink",
-    img: null,
-    isOpen: true,
-  };
+  const tile = { type: "tile" };
+  const startTile = { type: "start" };
+  const endTile = { type: "end" };
 
-  const endTile = {
-    type: "start",
-    backgroundColor: "gray",
-    img: null,
-    isOpen: true,
-  };
+  const tiles = Array.from({ length: numberOfRows }, () => Array.from({ length: numberOfCols }, () => tile));
 
-  return [
-    [startTile, tile, tile, tile, tile, tile, tile, tile],
-    [tile, tile, tile, tile, tile, tile, tile, tile],
-    [tile, tile, tile, tile, tile, tile, tile, tile],
-    [tile, tile, tile, tile, tile, tile, tile, tile],
-    [tile, tile, tile, tile, tile, tile, tile, tile],
-    [tile, tile, tile, tile, tile, tile, tile, endTile],
-  ];
+  tiles[startLocation.row][startLocation.col] = startTile;
+  tiles[endLocation.row][endLocation.col] = endTile;
+
+  return {
+    tiles,
+    size,
+    startLocation,
+    endLocation,
+    boardPadding,
+  };
 };

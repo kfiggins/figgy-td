@@ -20,13 +20,7 @@ const createInitialGameState = () => ({
       height: 30,
       speed: 500,
       targetLocation: { x: 850, y: 135 },
-      targetQueue: [
-        { x: 850, y: 335 },
-        { x: 135, y: 335 },
-        { x: 135, y: 535 },
-        { x: 850, y: 535 },
-        endLocation,
-      ],
+      targetQueue: [{ x: 850, y: 335 }, { x: 135, y: 335 }, { x: 135, y: 535 }, { x: 850, y: 535 }, endLocation],
     },
     {
       color: "red",
@@ -36,13 +30,7 @@ const createInitialGameState = () => ({
       height: 30,
       speed: 200,
       targetLocation: { x: 850, y: 135 },
-      targetQueue: [
-        { x: 850, y: 335 },
-        { x: 135, y: 335 },
-        { x: 135, y: 535 },
-        { x: 850, y: 535 },
-        endLocation,
-      ],
+      targetQueue: [{ x: 850, y: 335 }, { x: 135, y: 335 }, { x: 135, y: 535 }, { x: 850, y: 535 }, endLocation],
     },
     {
       color: "orange",
@@ -52,13 +40,7 @@ const createInitialGameState = () => ({
       height: 30,
       speed: 200,
       targetLocation: { x: 850, y: 135 },
-      targetQueue: [
-        { x: 850, y: 335 },
-        { x: 135, y: 335 },
-        { x: 135, y: 535 },
-        { x: 850, y: 535 },
-        endLocation,
-      ],
+      targetQueue: [{ x: 850, y: 335 }, { x: 135, y: 335 }, { x: 135, y: 535 }, { x: 850, y: 535 }, endLocation],
     },
     {
       color: "yellow",
@@ -68,13 +50,7 @@ const createInitialGameState = () => ({
       height: 30,
       speed: 200,
       targetLocation: { x: 850, y: 135 },
-      targetQueue: [
-        { x: 850, y: 335 },
-        { x: 135, y: 335 },
-        { x: 135, y: 535 },
-        { x: 850, y: 535 },
-        endLocation,
-      ],
+      targetQueue: [{ x: 850, y: 335 }, { x: 135, y: 335 }, { x: 135, y: 535 }, { x: 850, y: 535 }, endLocation],
     },
     {
       color: "red",
@@ -84,13 +60,7 @@ const createInitialGameState = () => ({
       height: 30,
       speed: 200,
       targetLocation: { x: 850, y: 135 },
-      targetQueue: [
-        { x: 850, y: 335 },
-        { x: 135, y: 335 },
-        { x: 135, y: 535 },
-        { x: 850, y: 535 },
-        endLocation,
-      ],
+      targetQueue: [{ x: 850, y: 335 }, { x: 135, y: 335 }, { x: 135, y: 535 }, { x: 850, y: 535 }, endLocation],
     },
     {
       color: "orange",
@@ -100,13 +70,7 @@ const createInitialGameState = () => ({
       height: 30,
       speed: 200,
       targetLocation: { x: 850, y: 135 },
-      targetQueue: [
-        { x: 850, y: 335 },
-        { x: 135, y: 335 },
-        { x: 135, y: 535 },
-        { x: 850, y: 535 },
-        endLocation,
-      ],
+      targetQueue: [{ x: 850, y: 335 }, { x: 135, y: 335 }, { x: 135, y: 535 }, { x: 850, y: 535 }, endLocation],
     },
     {
       color: "yellow",
@@ -116,13 +80,7 @@ const createInitialGameState = () => ({
       height: 30,
       speed: 200,
       targetLocation: { x: 850, y: 135 },
-      targetQueue: [
-        { x: 850, y: 335 },
-        { x: 135, y: 335 },
-        { x: 135, y: 535 },
-        { x: 850, y: 535 },
-        endLocation,
-      ],
+      targetQueue: [{ x: 850, y: 335 }, { x: 135, y: 335 }, { x: 135, y: 535 }, { x: 850, y: 535 }, endLocation],
     },
     {
       color: "black",
@@ -149,7 +107,7 @@ const createInitialGameState = () => ({
       ],
     },
   ],
-  tiles: getTiles(),
+  board: getTiles(),
 });
 
 const drawScreen = (context) => {
@@ -173,6 +131,22 @@ const gameEngine = (() => {
     update: ({ deltaTime, ctx }) => {
       currentState = update({ ...currentState, deltaTime });
       return gameEngine.getState();
+    },
+    handleClick: (x, y) => {
+      const { tiles, size, boardPadding } = currentState.board;
+
+      if (x < boardPadding || y < boardPadding) return;
+      if (x > size * tiles[0].length + boardPadding || y > size * tiles.length + boardPadding) return;
+
+      const col = Math.floor((x - boardPadding) / size);
+      const row = Math.floor((y - boardPadding) / size);
+      const tile = tiles[row][col];
+      if (tile.type !== "tile") {
+        return;
+      }
+      tiles[row][col] = { type: "tower" };
+
+      currentState = { ...currentState, board: { ...currentState.board, tiles: tiles } };
     },
   };
 })();
