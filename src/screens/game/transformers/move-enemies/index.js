@@ -1,21 +1,25 @@
 export default (context) => {
-  const { deltaTime, liveEnemies, endLocation } = context;
+  const { deltaTime, liveEnemies } = context;
   const secondsPassed = deltaTime / 1000;
 
   const updatedEnemies = [];
 
   liveEnemies.forEach((enemy) => {
 
-    const directionX = endLocation.x - enemy.x;
-    const directionY = endLocation.y - enemy.y;
+    const directionX = enemy.targetLocation.x - enemy.x;
+    const directionY =  enemy.targetLocation.y - enemy.y;
 
     const distanceToTarget = Math.sqrt(directionX * directionX + directionY * directionY);
+    const moveDistance = enemy.speed * secondsPassed;
 
-    if (distanceToTarget < 30) {
-      return;
+    if (distanceToTarget < 15) {
+      enemy.targetLocation = enemy.targetQueue.shift()
+      if (!enemy.targetLocation) {
+        return;
+      }
     }
 
-    let moveDistance = enemy.speed * secondsPassed;
+    
 
     const moveX = (directionX / distanceToTarget) * moveDistance;
     const moveY = (directionY / distanceToTarget) * moveDistance;
