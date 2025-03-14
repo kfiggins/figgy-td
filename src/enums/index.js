@@ -1,3 +1,3 @@
-import GAME_STATES from "./game-states"
+import SCREENS from "./screens";
 
-export { GAME_STATES }
+export { SCREENS };

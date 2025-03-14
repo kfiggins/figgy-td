@@ -1,24 +1,24 @@
-import { GAME_STATES } from "@enums";
+import { SCREENS } from "@enums";
 import { game, menu } from "@screens";
 
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
 let gameState = {
-  screen: GAME_STATES.MENU,
+  screen: SCREENS.MENU,
   lastTime: 0,
 };
 
 const handleClick = (state, x, y) => {
   switch (state.screen) {
-    case GAME_STATES.MENU:
+    case SCREENS.MENU:
       const newScreen = menu.handleClick(x, y);
       gameState = newScreen ? { ...state, screen: newScreen } : state;
       break;
-    case GAME_STATES.GAME:
+    case SCREENS.GAME:
       game.handleClick(x, y);
       break;
-    case GAME_STATES.GAME_OVER:
+    case SCREENS.GAME_OVER:
       break;
     default:
       break;
@@ -27,7 +27,7 @@ const handleClick = (state, x, y) => {
 
 const updateState = (state, deltaTime) => {
   switch (state.screen) {
-    case GAME_STATES.GAME:
+    case SCREENS.GAME:
       return { ...state, ...game.update({ deltaTime }) };
     default:
       return state;
@@ -38,13 +38,13 @@ const renderGame = (state) => {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   switch (state.screen) {
-    case GAME_STATES.MENU:
+    case SCREENS.MENU:
       menu.drawScreen(ctx);
       break;
-    case GAME_STATES.GAME:
+    case SCREENS.GAME:
       game.drawScreen(ctx);
       break;
-    case GAME_STATES.GAME_OVER:
+    case SCREENS.GAME_OVER:
       break;
   }
 };

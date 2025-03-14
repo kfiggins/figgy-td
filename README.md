@@ -24,3 +24,6 @@ We want to build a simple TD game where the enemies will have to go through a ma
 - [ ] Enemies health and die
 - [ ] Enemy waves
 - [ ] Create End screen
+- [ ] Full screen
+- [ ] Sound
+- [ ] Music
