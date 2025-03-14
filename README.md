@@ -23,7 +23,9 @@ We want to build a simple TD game where the enemies will have to go through a ma
 - [ ] Create tower upgrade
 - [ ] Enemies health and die
 - [ ] Enemy waves
+- [ ] Create economy
 - [ ] Create End screen
 - [ ] Full screen
 - [ ] Sound
 - [ ] Music
+- [ ] Create tower selection
