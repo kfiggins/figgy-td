@@ -13,9 +13,14 @@ We want to build a simple TD game where the enemies will have to go through a ma
 - [&check;] Create core game loop
 - [&check;] Create Menu screen
 - [&check;] Create Game screen
-- [ ] Create End screen
 - [&check;] Create basic enemy
 - [&check;] Create movement for enemy to go to the end of the maze
-- [ ] Create basic tower
-- [ ] Create tower placement
+- [&check;] Create basic tower
+- [&check;] Create tower placement
+- [ ] Have enemies avoid towers
 - [ ] Create tower attack on enemy in range
+- [ ] Tower attack enemy in range
+- [ ] Create tower upgrade
+- [ ] Enemies health and die
+- [ ] Enemy waves
+- [ ] Create End screen
