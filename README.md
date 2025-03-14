@@ -19,7 +19,6 @@ We want to build a simple TD game where the enemies will have to go through a ma
 - [&check;] Create tower placement
 - [ ] Have enemies avoid towers
 - [ ] Create tower attack on enemy in range
-- [ ] Tower attack enemy in range
 - [ ] Create tower upgrade
 - [ ] Enemies health and die
 - [ ] Enemy waves
