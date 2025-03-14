@@ -1,12 +1,11 @@
 export default (ctx) => {
   const { x, y, state } = ctx;
-  const { tiles, size, boardPadding } = state.board;
+  const { tiles, isOffBoard, getGridPosition } = state.board;
 
-  if (x < boardPadding || y < boardPadding) return;
-  if (x > size * tiles[0].length + boardPadding || y > size * tiles.length + boardPadding) return;
+  if (isOffBoard(x, y)) return;
 
-  const col = Math.floor((x - boardPadding) / size);
-  const row = Math.floor((y - boardPadding) / size);
+  const { row, col } = getGridPosition(x, y)
+
   const tile = tiles[row][col];
   if (tile.type !== "tile") {
     return;

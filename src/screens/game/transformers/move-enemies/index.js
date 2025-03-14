@@ -5,8 +5,8 @@ export default (context) => {
   const updatedEnemies = [];
 
   liveEnemies.forEach((enemy) => {
-    const directionX = enemy.targetLocation.x - enemy.x;
-    const directionY = enemy.targetLocation.y - enemy.y;
+    const directionX = enemy.targetLocation.x - enemy.x - enemy.width / 2;
+    const directionY = enemy.targetLocation.y - enemy.y - enemy.height / 2;
 
     const distanceToTarget = Math.sqrt(directionX * directionX + directionY * directionY);
     const moveDistance = enemy.speed * secondsPassed;

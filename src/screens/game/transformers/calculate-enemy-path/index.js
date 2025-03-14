@@ -1,20 +1,6 @@
 export default (context) => {
   const { board, liveEnemies, newTowerPlaced } = context;
-  const { tiles, size, boardPadding } = board;
-
-  // Calculate grid position from x,y coordinates
-  const getGridPosition = (x, y) => {
-    const col = Math.floor((x - boardPadding) / size);
-    const row = Math.floor((y - boardPadding) / size);
-    return { row, col };
-  };
-
-  // Calculate center x,y coordinates from grid position
-  const getCoordinates = (row, col) => {
-    const x = boardPadding + col * size + size / 2;
-    const y = boardPadding + row * size + size / 2;
-    return { x, y };
-  };
+  const { tiles, getGridPosition, getCoordinates } = board;
 
   // Check if position is within grid bounds
   const isInBounds = (row, col) => {
@@ -83,10 +69,7 @@ export default (context) => {
     // 2. Enemy has reached its current target or is very close to it, or
     // 3. A new tower has been placed
     const needsNewPath =
-      enemy.targetQueue.length === 0 ||
-      (enemy.targetQueue.length > 0 &&
-        Math.abs(enemy.x - enemy.targetLocation.x) < 5 &&
-        Math.abs(enemy.y - enemy.targetLocation.y) < 5) ||
+      (enemy.targetQueue.length === 0 && !enemy.targetLocation) ||
       newTowerPlaced === true;
 
     if (needsNewPath) {

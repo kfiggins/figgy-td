@@ -1,101 +1,68 @@
 import { placeTowerClick } from "./clicks";
 import { makeTimer, pipe } from "./helpers";
 import { drawBackground, drawTiles, drawEnemies, drawHUD } from "./renderers";
-import getTiles from "./tiles";
+import getBoard from "./board";
 import { calculateEnemyPath, moveEnemies, removeOffscreenEnemies, spawnEnemies } from "./transformers";
 
-const spawnLocation = { x: 135, y: 135 };
-const endLocation = { x: 835, y: 635 };
+const endLocation = { x: 885, y: 685 };
 
 const createInitialGameState = () => ({
   enemySpawnTimer: makeTimer(1000),
-  spawnLocation,
   endLocation,
   liveEnemies: [],
   newTowerPlaced: false,
   queueEnemies: [
     {
       color: "green",
-      x: spawnLocation.x,
-      y: spawnLocation.y,
-      width: 30,
-      height: 30,
-      speed: 500,
-      targetLocation: endLocation,
-      targetQueue: [],
+      width: 10,
+      height: 10,
+      speed: 60,
     },
     {
       color: "red",
-      x: spawnLocation.x,
-      y: spawnLocation.y,
-      width: 30,
+      width: 15,
       height: 30,
-      speed: 200,
-      targetLocation: endLocation,
-      targetQueue: [],
+      speed: 60,
     },
     {
+      shape: "circle",
       color: "orange",
-      x: spawnLocation.x,
-      y: spawnLocation.y,
       width: 30,
       height: 30,
-      speed: 200,
-      targetLocation: endLocation,
-      targetQueue: [],
+      speed: 60,
     },
     {
       color: "yellow",
-      x: spawnLocation.x,
-      y: spawnLocation.y,
-      width: 30,
-      height: 30,
-      speed: 200,
-      targetLocation: endLocation,
-      targetQueue: [],
+      width: 40,
+      height: 10,
+      speed: 60,
     },
     {
       color: "red",
-      x: spawnLocation.x,
-      y: spawnLocation.y,
       width: 30,
       height: 30,
-      speed: 200,
-      targetLocation: endLocation,
-      targetQueue: [],
+      speed: 60,
     },
     {
       color: "orange",
-      x: spawnLocation.x,
-      y: spawnLocation.y,
       width: 30,
       height: 30,
-      speed: 200,
-      targetLocation: endLocation,
-      targetQueue: [],
+      speed: 60,
     },
     {
       color: "yellow",
-      x: spawnLocation.x,
-      y: spawnLocation.y,
       width: 30,
       height: 30,
-      speed: 200,
-      targetLocation: endLocation,
-      targetQueue: [],
+      speed: 60,
     },
     {
       color: "black",
-      x: spawnLocation.x,
-      y: spawnLocation.y,
       width: 30,
       height: 30,
-      speed: 1000,
-      targetLocation: endLocation,
-      targetQueue: [],
+      speed: 60,
     },
   ],
-  board: getTiles(),
+  board: getBoard(),
 });
 
 const drawScreen = (context) => {
@@ -122,7 +89,9 @@ const gameEngine = (() => {
     },
     handleClick: (x, y) => {
       const output = pipe(placeTowerClick)({ x, y, state: currentState });
-      currentState = output.state;
+      if (output) {
+        currentState = output.state;
+      }
     },
   };
 })();
