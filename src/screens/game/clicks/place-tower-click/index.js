@@ -13,7 +13,7 @@ export default (ctx) => {
   }
   tiles[row][col] = { type: "tower" };
 
-  newState = { ...state, board: { ...state.board, tiles: tiles } };
+  const newState = { ...state, newTowerPlaced: true, board: { ...state.board, tiles: tiles } };
 
   return { ...ctx, state: newState };
 };

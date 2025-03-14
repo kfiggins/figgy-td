@@ -2,7 +2,7 @@ import { placeTowerClick } from "./clicks";
 import { makeTimer, pipe } from "./helpers";
 import { drawBackground, drawTiles, drawEnemies, drawHUD } from "./renderers";
 import getTiles from "./tiles";
-import { moveEnemies, removeOffscreenEnemies, spawnEnemies } from "./transformers";
+import { calculateEnemyPath, moveEnemies, removeOffscreenEnemies, spawnEnemies } from "./transformers";
 
 const spawnLocation = { x: 135, y: 135 };
 const endLocation = { x: 835, y: 635 };
@@ -12,6 +12,7 @@ const createInitialGameState = () => ({
   spawnLocation,
   endLocation,
   liveEnemies: [],
+  newTowerPlaced: false,
   queueEnemies: [
     {
       color: "green",
@@ -20,8 +21,8 @@ const createInitialGameState = () => ({
       width: 30,
       height: 30,
       speed: 500,
-      targetLocation: { x: 850, y: 135 },
-      targetQueue: [{ x: 850, y: 335 }, { x: 135, y: 335 }, { x: 135, y: 535 }, { x: 850, y: 535 }, endLocation],
+      targetLocation: endLocation,
+      targetQueue: [],
     },
     {
       color: "red",
@@ -30,8 +31,8 @@ const createInitialGameState = () => ({
       width: 30,
       height: 30,
       speed: 200,
-      targetLocation: { x: 850, y: 135 },
-      targetQueue: [{ x: 850, y: 335 }, { x: 135, y: 335 }, { x: 135, y: 535 }, { x: 850, y: 535 }, endLocation],
+      targetLocation: endLocation,
+      targetQueue: [],
     },
     {
       color: "orange",
@@ -40,8 +41,8 @@ const createInitialGameState = () => ({
       width: 30,
       height: 30,
       speed: 200,
-      targetLocation: { x: 850, y: 135 },
-      targetQueue: [{ x: 850, y: 335 }, { x: 135, y: 335 }, { x: 135, y: 535 }, { x: 850, y: 535 }, endLocation],
+      targetLocation: endLocation,
+      targetQueue: [],
     },
     {
       color: "yellow",
@@ -50,8 +51,8 @@ const createInitialGameState = () => ({
       width: 30,
       height: 30,
       speed: 200,
-      targetLocation: { x: 850, y: 135 },
-      targetQueue: [{ x: 850, y: 335 }, { x: 135, y: 335 }, { x: 135, y: 535 }, { x: 850, y: 535 }, endLocation],
+      targetLocation: endLocation,
+      targetQueue: [],
     },
     {
       color: "red",
@@ -60,8 +61,8 @@ const createInitialGameState = () => ({
       width: 30,
       height: 30,
       speed: 200,
-      targetLocation: { x: 850, y: 135 },
-      targetQueue: [{ x: 850, y: 335 }, { x: 135, y: 335 }, { x: 135, y: 535 }, { x: 850, y: 535 }, endLocation],
+      targetLocation: endLocation,
+      targetQueue: [],
     },
     {
       color: "orange",
@@ -70,8 +71,8 @@ const createInitialGameState = () => ({
       width: 30,
       height: 30,
       speed: 200,
-      targetLocation: { x: 850, y: 135 },
-      targetQueue: [{ x: 850, y: 335 }, { x: 135, y: 335 }, { x: 135, y: 535 }, { x: 850, y: 535 }, endLocation],
+      targetLocation: endLocation,
+      targetQueue: [],
     },
     {
       color: "yellow",
@@ -80,8 +81,8 @@ const createInitialGameState = () => ({
       width: 30,
       height: 30,
       speed: 200,
-      targetLocation: { x: 850, y: 135 },
-      targetQueue: [{ x: 850, y: 335 }, { x: 135, y: 335 }, { x: 135, y: 535 }, { x: 850, y: 535 }, endLocation],
+      targetLocation: endLocation,
+      targetQueue: [],
     },
     {
       color: "black",
@@ -90,22 +91,8 @@ const createInitialGameState = () => ({
       width: 30,
       height: 30,
       speed: 1000,
-      targetLocation: { x: 850, y: 135 },
-      targetQueue: [
-        { x: 850, y: 600 },
-        { x: 135, y: 100 },
-        { x: 1000, y: 500 },
-        { x: 435, y: 135 },
-        { x: 635, y: 335 },
-        { x: 435, y: 535 },
-        { x: 135, y: 335 },
-        { x: 435, y: 135 },
-        { x: 635, y: 335 },
-        { x: 435, y: 535 },
-        { x: 135, y: 335 },
-        { x: 435, y: 135 },
-        endLocation,
-      ],
+      targetLocation: endLocation,
+      targetQueue: [],
     },
   ],
   board: getTiles(),
@@ -116,7 +103,7 @@ const drawScreen = (context) => {
 };
 
 const update = (context) => {
-  return pipe(spawnEnemies, moveEnemies, removeOffscreenEnemies)(context);
+  return pipe(spawnEnemies, calculateEnemyPath, moveEnemies, removeOffscreenEnemies)(context);
 };
 
 const gameEngine = (() => {
