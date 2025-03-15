@@ -17,10 +17,11 @@ We want to build a simple TD game where the enemies will have to go through a ma
 - [&check;] Create movement for enemy to go to the end of the maze
 - [&check;] Create basic tower
 - [&check;] Create tower placement
-- [ ] Have enemies avoid towers
-- [ ] Create tower attack on enemy in range
+- [&check;] Have enemies avoid towers
+- [&check;] Create tower attack on enemy in range
+- [ ] Create user health and lose condition
 - [ ] Create tower upgrade
-- [ ] Enemies health and die
+- [&check;] Enemies health and die
 - [ ] Enemy waves
 - [ ] Create economy
 - [ ] Create End screen
