@@ -9,7 +9,6 @@ export default (context) => {
       const tile = updatedTiles[row][col];
 
       if (tile.type === "tower") {
-        console.log("Tower found", tile.bulletCooldown);
         if (tile.bulletCooldown > 0) {
           tile.bulletCooldown--;
           continue;

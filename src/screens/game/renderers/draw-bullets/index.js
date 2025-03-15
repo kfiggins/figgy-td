@@ -5,8 +5,6 @@ export default (context) => {
   } = context;
   const { towerBullets } = gameState;
 
-  console.log("Drawing bullets", towerBullets);
-
   towerBullets.forEach((bullet) => {
     ctx.fillStyle = bullet.color;
     ctx.beginPath();

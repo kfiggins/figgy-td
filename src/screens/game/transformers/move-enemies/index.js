@@ -19,6 +19,10 @@ export default (context) => {
     const moveX = (directionX / distanceToTarget) * moveDistance;
     const moveY = (directionY / distanceToTarget) * moveDistance;
 
+    if (enemy.health <= 0) {
+      return;
+    }
+
     updatedEnemies.push({
       ...enemy,
       x: enemy.x + moveX,

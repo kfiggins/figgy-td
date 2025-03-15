@@ -6,9 +6,10 @@ export default (context) => {
       const targetEnemy = liveEnemies.find((enemy) => enemy.id === bullet.targetEnemyId);
 
       if (!targetEnemy) {
+        // Destroy the bullet if the target enemy, we could have it target the next closest enemy
         return {
           ...acc,
-          updatedBullets: [...acc.updatedBullets, bullet],
+          updatedBullets: acc.updatedBullets,
         };
       }
 
