@@ -19,7 +19,7 @@ export default (ctx) => {
     bulletSpeed: 5,
     bulletDamage: 10,
     bulletColor: "red",
-    range: 300,
+    range: 200,
   };
 
   const newState = { ...state, newTowerPlaced: true, board: { ...state.board, tiles: tiles } };
