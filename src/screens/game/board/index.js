@@ -29,12 +29,73 @@ export default () => {
     return { x, y };
   };
 
+  // Check if position is within grid bounds
+  const isInBounds = (row, col) => {
+    return row >= 0 && row < tiles.length && col >= 0 && col < tiles[0].length;
+  };
+
   const isOffBoard = (x, y) => {
     return x < boardPadding
       || y < boardPadding
       || x > size * tiles[0].length + boardPadding
       || y > size * tiles.length + boardPadding;
   }
+
+  // Check if tile is traversable
+  const isTraversable = (tiles, row, col) => {
+    return isInBounds(row, col) && tiles[row][col].type !== "tower";
+  };
+
+  // BFS to find shortest path
+  const findPath = (tiles, startX, startY, endX, endY) => {
+    const start = getGridPosition(startX, startY);
+    const end = getGridPosition(endX, endY);
+
+    // If already at the target, return empty path
+    if (start.row === end.row && start.col === end.col) {
+      return [];
+    }
+
+    const queue = [{ row: start.row, col: start.col, path: [] }];
+    const visited = new Set();
+
+    // Directions: up, right, down, left
+    const directions = [
+      { row: -1, col: 0 },
+      { row: 0, col: 1 },
+      { row: 1, col: 0 },
+      { row: 0, col: -1 },
+    ];
+
+    while (queue.length > 0) {
+      const current = queue.shift();
+      const key = `${current.row},${current.col}`;
+
+      // Skip if already visited
+      if (visited.has(key)) continue;
+      visited.add(key);
+
+      // Check if reached the end
+      if (current.row === end.row && current.col === end.col) {
+        return current.path;
+      }
+
+      // Try all directions
+      for (const dir of directions) {
+        const newRow = current.row + dir.row;
+        const newCol = current.col + dir.col;
+
+        if (isTraversable(tiles, newRow, newCol)) {
+          const coords = getCoordinates(newRow, newCol);
+          const newPath = [...current.path, coords];
+          queue.push({ row: newRow, col: newCol, path: newPath });
+        }
+      }
+    }
+
+    // No path found
+    return [];
+  };
 
   return {
     tiles,
@@ -45,5 +106,6 @@ export default () => {
     getGridPosition,
     getCoordinates,
     isOffBoard,
+    findPath,
   };
 };

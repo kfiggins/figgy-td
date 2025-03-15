@@ -1,13 +1,13 @@
 export default (ctx) => {
   const { x, y, state } = ctx;
-  const { tiles, isOffBoard, getGridPosition } = state.board;
+  const { tiles, isOffBoard, getGridPosition, getCoordinates, startLocation, endLocation, findPath } = state.board;
 
   if (isOffBoard(x, y)) return;
 
   const { row, col } = getGridPosition(x, y);
 
-  const tile = tiles[row][col];
-  if (tile.type !== "tile") {
+  const oldTile = tiles[row][col];
+  if (!oldTile || oldTile.type !== "tile") {
     return;
   }
   tiles[row][col] = {
@@ -21,6 +21,14 @@ export default (ctx) => {
     bulletColor: "red",
     range: 200,
   };
+
+  const startCoordinates = getCoordinates(startLocation.row, startLocation.col)
+  const endCoordinates = getCoordinates(endLocation.row, endLocation.col)
+  const path = findPath(tiles, startCoordinates.x, startCoordinates.y, endCoordinates.x, endCoordinates.y)
+  if (path.length === 0) {
+    tiles[row][col] = oldTile;
+    return;
+  }
 
   const newState = { ...state, newTowerPlaced: true, board: { ...state.board, tiles: tiles } };
 
