@@ -4,13 +4,22 @@ export default (ctx) => {
 
   if (isOffBoard(x, y)) return;
 
-  const { row, col } = getGridPosition(x, y)
+  const { row, col } = getGridPosition(x, y);
 
   const tile = tiles[row][col];
   if (tile.type !== "tile") {
     return;
   }
-  tiles[row][col] = { type: "tower" };
+  tiles[row][col] = {
+    type: "tower",
+    row,
+    col,
+    bulletCooldown: 1000,
+    bulletSpeed: 10,
+    bulletDamage: 10,
+    bulletColor: "red",
+    range: 100,
+  };
 
   const newState = { ...state, newTowerPlaced: true, board: { ...state.board, tiles: tiles } };
 

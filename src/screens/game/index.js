@@ -2,64 +2,81 @@ import { placeTowerClick } from "./clicks";
 import { makeTimer, pipe } from "./helpers";
 import { drawBackground, drawTiles, drawEnemies, drawHUD } from "./renderers";
 import getBoard from "./board";
-import { calculateEnemyPath, moveEnemies, removeOffscreenEnemies, spawnEnemies } from "./transformers";
+import { calculateEnemyPath, moveEnemies, shootAtEnemies, spawnEnemies } from "./transformers";
 
 const endLocation = { x: 885, y: 685 };
 
 const createInitialGameState = () => ({
+  towerBullets: [],
   enemySpawnTimer: makeTimer(1000),
   endLocation,
   liveEnemies: [],
   newTowerPlaced: false,
   queueEnemies: [
     {
+      id: 1,
       color: "green",
       width: 10,
       height: 10,
       speed: 60,
+      health: 100,
     },
     {
+      id: 2,
       color: "red",
       width: 15,
       height: 30,
       speed: 60,
+      health: 100,
     },
     {
+      id: 3,
       shape: "circle",
       color: "orange",
       width: 30,
       height: 30,
       speed: 60,
+      health: 100,
     },
     {
+      id: 4,
       color: "yellow",
       width: 40,
       height: 10,
       speed: 60,
+      health: 100,
     },
     {
+      id: 5,
       color: "red",
       width: 30,
       height: 30,
       speed: 60,
+      health: 100,
     },
     {
+      id: 6,
       color: "orange",
       width: 30,
       height: 30,
       speed: 60,
+      health: 100,
     },
     {
+      id: 7,
       color: "yellow",
       width: 30,
       height: 30,
       speed: 60,
+      health: 100,
     },
     {
+      id: 8,
       color: "black",
       width: 30,
       height: 30,
       speed: 60,
+      health: 100,
     },
   ],
   board: getBoard(),
@@ -70,7 +87,7 @@ const drawScreen = (context) => {
 };
 
 const update = (context) => {
-  return pipe(spawnEnemies, calculateEnemyPath, moveEnemies, removeOffscreenEnemies)(context);
+  return pipe(spawnEnemies, calculateEnemyPath, moveEnemies, shootAtEnemies)(context);
 };
 
 const gameEngine = (() => {
