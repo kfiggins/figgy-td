@@ -20,6 +20,7 @@ We want to build a simple TD game where the enemies will have to go through a ma
 - [&check;] Have enemies avoid towers
 - [&check;] Create tower attack on enemy in range
 - [&check;] Enemies health and die
+- [&check;] Block tower placement if it blocks path
 - [ ] Enemy waves
 - [ ] Create user health and lose condition
 - [ ] Create economy
