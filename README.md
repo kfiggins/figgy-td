@@ -19,13 +19,12 @@ We want to build a simple TD game where the enemies will have to go through a ma
 - [&check;] Create tower placement
 - [&check;] Have enemies avoid towers
 - [&check;] Create tower attack on enemy in range
-- [ ] Create user health and lose condition
-- [ ] Create tower upgrade
 - [&check;] Enemies health and die
 - [ ] Enemy waves
+- [ ] Create user health and lose condition
 - [ ] Create economy
+- [ ] Create tower upgrade
 - [ ] Create End screen
 - [ ] Full screen
 - [ ] Sound
 - [ ] Music
-- [ ] Create tower selection
