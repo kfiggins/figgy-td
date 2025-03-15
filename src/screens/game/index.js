@@ -4,12 +4,9 @@ import { drawBackground, drawTiles, drawEnemies, drawHUD, drawBullets } from "./
 import getBoard from "./board";
 import { calculateEnemyPath, moveEnemies, createTowerBullets, spawnEnemies, moveTowerBullets } from "./transformers";
 
-const endLocation = { x: 885, y: 685 };
-
 const createInitialGameState = () => ({
   towerBullets: [],
   enemySpawnTimer: makeTimer(1000),
-  endLocation,
   liveEnemies: [],
   newTowerPlaced: false,
   queueEnemies: [

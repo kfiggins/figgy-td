@@ -1,6 +1,7 @@
 export default (context) => {
   const { board, liveEnemies, newTowerPlaced } = context;
-  const { tiles, getGridPosition, getCoordinates } = board;
+  const { tiles, endLocation, getGridPosition, getCoordinates } = board;
+  const endCoordinates = getCoordinates(endLocation.row, endLocation.col)
 
   // Check if position is within grid bounds
   const isInBounds = (row, col) => {
@@ -74,7 +75,8 @@ export default (context) => {
 
     if (needsNewPath) {
       // Find path from current position to end location
-      const path = findPath(enemy.x, enemy.y, context.endLocation.x, context.endLocation.y);
+      
+      const path = findPath(enemy.x, enemy.y, endCoordinates.x, endCoordinates.y);
 
       // Update target queue and current target if path found
       if (path.length > 0) {
@@ -99,7 +101,7 @@ export default (context) => {
       return {
         ...enemy,
         targetQueue: newTargetQueue,
-        targetLocation: nextTarget || context.endLocation,
+        targetLocation: nextTarget || endCoordinates,
       };
     }
 
