@@ -14,11 +14,11 @@ export default (ctx) => {
     type: "tower",
     row,
     col,
-    bulletCooldown: 1000,
+    bulletCooldown: 30,
     bulletSpeed: 10,
     bulletDamage: 10,
     bulletColor: "red",
-    range: 100,
+    range: 300,
   };
 
   const newState = { ...state, newTowerPlaced: true, board: { ...state.board, tiles: tiles } };

@@ -1,8 +1,8 @@
 import { placeTowerClick } from "./clicks";
 import { makeTimer, pipe } from "./helpers";
-import { drawBackground, drawTiles, drawEnemies, drawHUD } from "./renderers";
+import { drawBackground, drawTiles, drawEnemies, drawHUD, drawBullets } from "./renderers";
 import getBoard from "./board";
-import { calculateEnemyPath, moveEnemies, shootAtEnemies, spawnEnemies } from "./transformers";
+import { calculateEnemyPath, moveEnemies, createTowerBullets, spawnEnemies, moveTowerBullets } from "./transformers";
 
 const endLocation = { x: 885, y: 685 };
 
@@ -83,11 +83,11 @@ const createInitialGameState = () => ({
 });
 
 const drawScreen = (context) => {
-  pipe(drawBackground, drawTiles, drawEnemies, drawHUD)(context);
+  pipe(drawBackground, drawTiles, drawBullets, drawEnemies, drawHUD)(context);
 };
 
 const update = (context) => {
-  return pipe(spawnEnemies, calculateEnemyPath, moveEnemies, shootAtEnemies)(context);
+  return pipe(spawnEnemies, calculateEnemyPath, moveEnemies, moveTowerBullets, createTowerBullets)(context);
 };
 
 const gameEngine = (() => {
