@@ -1,4 +1,5 @@
 import menu from "./menu";
 import game from "./game";
+import end from "./end";
 
-export { game, menu };
+export { end, game, menu };

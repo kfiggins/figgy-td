@@ -1,5 +1,5 @@
 import { SCREENS } from "@enums";
-import { game, menu } from "@screens";
+import { end, game, menu } from "@screens";
 
 export default (state, x, y) => {
   switch (state.screen) {
@@ -10,7 +10,8 @@ export default (state, x, y) => {
       game.handleClick(x, y);
       return state;
     case SCREENS.GAME_OVER:
-      return state;
+      const newScreenEnd = end.handleClick(x, y);
+      return newScreenEnd ? { ...state, screen: newScreenEnd } : state;
     default:
       return state;
   }

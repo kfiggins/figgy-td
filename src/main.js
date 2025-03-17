@@ -12,6 +12,11 @@ const gameLoop = (timestamp) => {
   const deltaTime = timestamp - mainState.lastTime;
   mainState = updateState({ ...mainState, lastTime: timestamp }, deltaTime);
 
+  // TODO: Don't love this check here, but it works for now.
+  if (mainState?.player?.health <= 0) {
+    mainState = { ...mainState, screen: SCREENS.GAME_OVER, player: { health: 20 } };
+  }
+
   renderGame(canvas, mainState);
   requestAnimationFrame(gameLoop);
 };

@@ -1,5 +1,5 @@
 import { SCREENS } from "@enums";
-import { game, menu } from "@screens";
+import { end, game, menu } from "@screens";
 
 export default (canvas, state) => {
   const ctx = canvas.getContext("2d");
@@ -13,6 +13,7 @@ export default (canvas, state) => {
       game.drawScreen(ctx);
       break;
     case SCREENS.GAME_OVER:
+      end.drawScreen(ctx);
       break;
   }
 };
