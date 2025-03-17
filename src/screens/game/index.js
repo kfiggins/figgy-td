@@ -2,15 +2,26 @@ import { placeTowerClick } from "./clicks";
 import { makeTimer, pipe } from "./helpers";
 import { drawBackground, drawTiles, drawEnemies, drawHUD, drawBullets } from "./renderers";
 import getBoard from "./board";
-import { calculateEnemyPath, moveEnemies, createTowerBullets, spawnEnemies, moveTowerBullets, scheduleWaves } from "./transformers";
+import {
+  calculateEnemyPath,
+  moveEnemies,
+  createTowerBullets,
+  spawnEnemies,
+  moveTowerBullets,
+  scheduleWaves,
+} from "./transformers";
 
 const createInitialGameState = () => ({
-  towerBullets: [],
+  board: getBoard(),
   enemySpawnTimer: makeTimer(1000),
   liveEnemies: [],
   newTowerPlaced: false,
   queueEnemies: [],
-  board: getBoard(),
+  towerBullets: [],
+  player: {
+    health: 20,
+    gold: 100,
+  },
 });
 
 const drawScreen = (context) => {
@@ -18,7 +29,14 @@ const drawScreen = (context) => {
 };
 
 const update = (context) => {
-  return pipe(scheduleWaves, spawnEnemies, calculateEnemyPath, moveEnemies, moveTowerBullets, createTowerBullets)(context);
+  return pipe(
+    scheduleWaves,
+    spawnEnemies,
+    calculateEnemyPath,
+    moveEnemies,
+    moveTowerBullets,
+    createTowerBullets
+  )(context);
 };
 
 const gameEngine = (() => {
