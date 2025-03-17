@@ -22,10 +22,15 @@ We want to build a simple TD game where the enemies will have to go through a ma
 - [&check;] Enemies health and die
 - [&check;] Block tower placement if it blocks path
 - [&check;] Enemy waves
-- [ ] Create user health and lose condition
-- [ ] Create economy
+- [&check;] Create user health and lose condition
+- [&check;] Create economy
+- [&check;] Create End screen
 - [ ] Create tower upgrade
-- [ ] Create End screen
+- [ ] Create tower types
+- [ ] Work on balancing the waves, enemy rewards, tower costs, etc.
 - [ ] Full screen
 - [ ] Sound
 - [ ] Music
+- [ ] Make Menu pretty
+- [ ] Make Game pretty
+- [ ] Make End screen pretty
