@@ -14,6 +14,7 @@ import {
 const createInitialGameState = () => ({
   board: getBoard(),
   enemySpawnTimer: makeTimer(1000),
+  enemiesKilled: 0,
   liveEnemies: [],
   newTowerPlaced: false,
   queueEnemies: [],

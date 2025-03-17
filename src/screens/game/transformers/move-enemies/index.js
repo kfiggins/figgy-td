@@ -1,9 +1,10 @@
 export default (context) => {
-  const { deltaTime, liveEnemies, player } = context;
+  const { deltaTime, enemiesKilled, liveEnemies, player } = context;
   const secondsPassed = deltaTime / 1000;
 
   const updatedEnemies = [];
   const updatedPlayer = { ...player };
+  let updatedEnemiesKilled = enemiesKilled;
 
   liveEnemies.forEach((enemy) => {
     const directionX = enemy.targetLocation.x - enemy.x - enemy.width / 2;
@@ -25,6 +26,7 @@ export default (context) => {
 
     if (enemy.health <= 0) {
       updatedPlayer.gold += enemy.reward;
+      updatedEnemiesKilled += 1;
       return;
     }
 
@@ -35,5 +37,5 @@ export default (context) => {
     });
   });
 
-  return { ...context, liveEnemies: updatedEnemies, player: updatedPlayer };
+  return { ...context, enemiesKilled: updatedEnemiesKilled, liveEnemies: updatedEnemies, player: updatedPlayer };
 };

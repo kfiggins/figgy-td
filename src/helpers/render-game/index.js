@@ -13,7 +13,7 @@ export default (canvas, state) => {
       game.drawScreen(ctx);
       break;
     case SCREENS.GAME_OVER:
-      end.drawScreen(ctx);
+      end.drawScreen({ ctx, state });
       break;
   }
 };
