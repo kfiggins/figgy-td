@@ -65,6 +65,7 @@ const enemyInfo = {
     color: "cyan",
     health: 300,
     height: 30,
+    reward: 15,
     shape: "circle",
     speed: 80,
     width: 30,

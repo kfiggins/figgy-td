@@ -25,7 +25,7 @@ export default (context) => {
     const moveY = (directionY / distanceToTarget) * moveDistance;
 
     if (enemy.health <= 0) {
-      updatedPlayer.gold += enemy.reward;
+      updatedPlayer.gold += (enemy.reward || 0);
       updatedEnemiesKilled += 1;
       return;
     }
