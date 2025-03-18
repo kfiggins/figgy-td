@@ -25,9 +25,10 @@ We want to build a simple TD game where the enemies will have to go through a ma
 - [&check;] Create user health and lose condition
 - [&check;] Create economy
 - [&check;] Create End screen
-- [ ] Create tower upgrade
+- [&check;] Create tower upgrade
 - [ ] Create tower types
 - [ ] Work on balancing the waves, enemy rewards, tower costs, etc.
+- [ ] Once we get the above done I want to clean up and do a big refactor
 - [ ] Full screen
 - [ ] Sound
 - [ ] Music
