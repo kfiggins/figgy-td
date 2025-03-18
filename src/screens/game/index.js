@@ -1,4 +1,4 @@
-import { placeTowerClick } from "./clicks";
+import { placeTowerClick, upgradeTowerClick } from "./clicks";
 import { makeTimer, pipe } from "./helpers";
 import { drawBackground, drawTiles, drawEnemies, drawHUD, drawBullets } from "./renderers";
 import getBoard from "./board";
@@ -24,7 +24,7 @@ const createInitialGameState = () => ({
   towerBullets: [],
   player: {
     health: 20,
-    gold: 100,
+    gold: 200,
   },
 });
 
@@ -58,7 +58,7 @@ const gameEngine = (() => {
       return gameEngine.getState();
     },
     handleClick: (x, y) => {
-      const output = pipe(placeTowerClick)({ x, y, state: currentState });
+      const output = pipe(placeTowerClick, upgradeTowerClick)({ x, y, state: currentState });
       if (output) {
         currentState = output.state;
       }

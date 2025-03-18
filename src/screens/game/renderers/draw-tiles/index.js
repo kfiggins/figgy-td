@@ -11,7 +11,7 @@ export default (context) => {
     row.forEach((tile, colIndex) => {
       const tileData = mapTileType[tile.type];
 
-      ctx.fillStyle = tileData.backgroundColor;
+      ctx.fillStyle = tile.color || tileData.backgroundColor;
       const x = colIndex * size + boardPadding;
       const y = rowIndex * size + boardPadding;
       ctx.fillRect(x, y, size, size);

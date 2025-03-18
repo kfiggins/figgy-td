@@ -17,15 +17,17 @@ export default (ctx) => {
     return ctx;
   }
   tiles[row][col] = {
-    type: "tower",
-    row,
-    col,
+    bulletColor: "red",
     bulletCooldown: 50,
     bulletCooldownMax: 50,
-    bulletSpeed: 5,
     bulletDamage: 10,
-    bulletColor: "red",
+    bulletSpeed: 5,
+    col,
+    color: "orange",
+    level: 1,
     range: 200,
+    row,
+    type: "tower",
   };
 
   const startCoordinates = getCoordinates(startLocation.row, startLocation.col);
