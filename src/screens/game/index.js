@@ -24,7 +24,7 @@ const createInitialGameState = () => ({
   towerBullets: [],
   player: {
     health: 20,
-    gold: 200,
+    gold: 100,
   },
 });
 
