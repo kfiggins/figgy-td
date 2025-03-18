@@ -72,7 +72,7 @@ const enemyInfo = {
   },
   [ENEMY_TYPES.BULKS]: {
     color: "orange",
-    health: 2000,
+    health: 1000,
     height: 20,
     reward: 20,
     shape: "hex",
@@ -81,7 +81,7 @@ const enemyInfo = {
   },
   [ENEMY_TYPES.FRACTALS]: {
     color: "red",
-    health: 1000,
+    health: 750,
     height: 40,
     reward: 20,
     shape: "triangle",
@@ -90,7 +90,7 @@ const enemyInfo = {
   },
   [ENEMY_TYPES.SINGULARITY]: {
     color: "black",
-    health: 5000,
+    health: 2000,
     height: 50,
     reward: 50,
     shape: "circle",

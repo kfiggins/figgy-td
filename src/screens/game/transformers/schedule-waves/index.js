@@ -136,18 +136,43 @@ const wave4 = [
 ]
 
 const waves = [
-  wave1,
-  wave2,
-  wave3,
-  wave4,
-  // test,
+  {
+    enemies: wave1,
+    time: 5,
+  },
+  {
+    enemies: wave2,
+    time: 15,
+  },
+  {
+    enemies: wave3,
+    time: 15,
+  },
+  {
+    enemies: wave4,
+    time: 15,
+  },
+  // {
+  //   enemies: test,
+  //   timer: makeTimer(1000),
+  // },
 ]
 
 export default (context) => {
-  const { queueEnemies } = context;
-  // TODO: add timer for waves and combined into queueEnemies
-  if (queueEnemies.length === 0 && waves.length !== 0) {
-    return { ...context, queueEnemies: waves.shift() };
+  const { queueEnemies, upcomingWave, deltaTime, waveTimer, lastWave } = context;
+
+  if (waveTimer(deltaTime)) {
+    upcomingWave.time -= 1;
+  }
+
+  if (upcomingWave.time < 0) {
+    upcomingWave.time = 0;
+    const wave = waves.shift()
+    if (wave) {
+      return { ...context, upcomingWave: wave, queueEnemies: [...queueEnemies, ...upcomingWave.enemies] };
+    } else if (!lastWave) {
+      return { ...context, lastWave: true, queueEnemies: [...queueEnemies, ...upcomingWave.enemies] };
+    }
   }
   return context;
 };
