@@ -1,11 +1,12 @@
-import { defineConfig } from 'vite'
-import path from 'path'
+import { defineConfig } from "vite";
+import path from "path";
 
 export default defineConfig({
   resolve: {
     alias: {
-      '@enums': path.resolve(__dirname, 'src/enums'),
-      '@screens': path.resolve(__dirname, 'src/screens'),
-    }
-  }
-})
+      "@enums": path.resolve(__dirname, "src/enums"),
+      "@helpers": path.resolve(__dirname, "src/helpers"),
+      "@screens": path.resolve(__dirname, "src/screens"),
+    },
+  },
+});

@@ -1,5 +1,5 @@
 import { SCREENS } from "@enums";
-import { handleClick, renderGame, updateState } from "./helpers";
+import { handleClick, renderGame, updateState } from "@helpers";
 
 const canvas = document.getElementById("gameCanvas");
 
