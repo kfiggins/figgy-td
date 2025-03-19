@@ -38,17 +38,15 @@ const buildEnemies = (types, amount) => {
 
 const getNextWave = (level, firstWave) => {
   const enemyArray = [
-    ENEMY_TYPES.BULKS,
-    ENEMY_TYPES.DARTS,
-    ENEMY_TYPES.ORBITERS,
-    ENEMY_TYPES.PIPS,
     ENEMY_TYPES.BLOCK,
+    ENEMY_TYPES.DARTS,
     ENEMY_TYPES.MONOLITHS,
+    ENEMY_TYPES.PIPS,
+    ENEMY_TYPES.ORBITERS,
+    ENEMY_TYPES.BULKS,
     ENEMY_TYPES.FRACTALS,
     ENEMY_TYPES.SINGULARITY,
   ]
-
-
 
   const enemies = buildEnemies([{ type: enemyArray[level % enemyArray.length] }], 10)
 
