@@ -1,6 +1,5 @@
 import { initialState } from "@configs";
-import { renderGame } from "@helpers";
-import { advanceGameState, createStateManager, initializeCanvasEventListeners } from "./helpers";
+import { advanceGameState, createStateManager, initializeCanvasEventListeners, renderGame } from "@helpers";
 
 const stateManager = createStateManager(initialState);
 initializeCanvasEventListeners(stateManager);
