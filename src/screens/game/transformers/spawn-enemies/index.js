@@ -20,7 +20,7 @@ export default (context) => {
       targetQueue: [],
       targetLocation: null,
     };
-    newEnemy.health += newEnemy.health * level / 10;
+    newEnemy.health += newEnemy.health * level / 8 * ((Math.floor(level / 8) + 1)/2);
     newEnemy.startingHealth = newEnemy.health;
     newEnemy.speed += level;
 
@@ -47,22 +47,22 @@ const enemyInfo = {
     speed: 70,
     width: 30,
   },
+  [ENEMY_TYPES.PIPS]: {
+    color: "green",
+    health: 100,
+    height: 20,
+    reward: 15,
+    shape: "circle",
+    speed: 120,
+    width: 10,
+  },
   [ENEMY_TYPES.MONOLITHS]: {
     color: "red",
     health: 500,
     height: 30,
-    reward: 15,
+    reward: 20,
     speed: 40,
     width: 50,
-  },
-  [ENEMY_TYPES.PIPS]: {
-    color: "green",
-    health: 100,
-    height: 10,
-    reward: 20,
-    shape: "circle",
-    speed: 100,
-    width: 10,
   },
   [ENEMY_TYPES.ORBITERS]: {
     color: "cyan",

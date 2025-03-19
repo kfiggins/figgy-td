@@ -6,7 +6,7 @@ export default (context) => {
 
   gameState.liveEnemies.forEach((enemy) => {
     ctx.fillStyle = enemy.color;
-    const fillPercent = enemy.startingHealth / enemy.health
+    const fillPercent = enemy.health > 0 ? enemy.startingHealth / enemy.health : 0;
     if (enemy.shape === "circle") {
       ctx.fillStyle = "black";
       ctx.beginPath();

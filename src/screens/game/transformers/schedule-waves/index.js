@@ -8,10 +8,10 @@ const test = [
     type: ENEMY_TYPES.DARTS
   },
   {
-    type: ENEMY_TYPES.MONOLITHS
+    type: ENEMY_TYPES.PIPS
   },
   {
-    type: ENEMY_TYPES.PIPS
+    type: ENEMY_TYPES.MONOLITHS
   },
   {
     type: ENEMY_TYPES.ORBITERS
@@ -40,8 +40,8 @@ const getNextWave = (level, firstWave) => {
   const enemyArray = [
     ENEMY_TYPES.BLOCK,
     ENEMY_TYPES.DARTS,
-    ENEMY_TYPES.MONOLITHS,
     ENEMY_TYPES.PIPS,
+    ENEMY_TYPES.MONOLITHS,
     ENEMY_TYPES.ORBITERS,
     ENEMY_TYPES.BULKS,
     ENEMY_TYPES.FRACTALS,
