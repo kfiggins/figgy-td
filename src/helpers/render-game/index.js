@@ -1,7 +1,9 @@
 import { SCREENS } from "@enums";
 import { end, game, menu } from "@screens";
+import { getCanvas } from "@helpers";
 
-export default (canvas, state) => {
+export default (state) => {
+  const canvas = getCanvas();
   const ctx = canvas.getContext("2d");
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
