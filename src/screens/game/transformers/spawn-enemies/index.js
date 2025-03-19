@@ -1,7 +1,7 @@
 import { ENEMY_TYPES } from "@enums";
 
 export default (context) => {
-  const { enemySpawnTimer, queueEnemies, liveEnemies, deltaTime, board } = context;
+  const { enemySpawnTimer, queueEnemies, liveEnemies, deltaTime, board, level } = context;
   const { getCoordinates, startLocation } = board;
 
   const shouldSpawn = enemySpawnTimer(deltaTime);
@@ -20,6 +20,9 @@ export default (context) => {
       targetQueue: [],
       targetLocation: null,
     };
+    newEnemy.health += newEnemy.health * level / 10;
+    newEnemy.startingHealth = newEnemy.health;
+    newEnemy.speed += level;
 
     return { ...context, queueEnemies: remainingQueue, liveEnemies: [...liveEnemies, newEnemy] };
   }
@@ -29,15 +32,15 @@ export default (context) => {
 const enemyInfo = {
   [ENEMY_TYPES.BLOCK]: {
     color: "orange",
-    health: 200,
+    health: 150,
     height: 30,
     reward: 5,
-    speed: 60,
+    speed: 50,
     width: 30,
   },
   [ENEMY_TYPES.DARTS]: {
     color: "yellow",
-    health: 150,
+    health: 175,
     height: 30,
     reward: 10,
     shape: "triangle",

@@ -1,7 +1,7 @@
 export default (context) => {
   const {
     canvas: { ctx },
-    gameState: { player, upcomingWave},
+    gameState: { player, upcomingWave, level},
   } = context;
   ctx.fillStyle = "white";
   ctx.font = "40px Arial";
@@ -14,6 +14,11 @@ export default (context) => {
   ctx.fillStyle = "white";
   ctx.font = "40px Arial";
   ctx.fillText(`Timer: ${upcomingWave.time}`, 550, 50);
+
+  ctx.fillStyle = "white";
+  ctx.font = "40px Arial";
+  ctx.fillText(`Level: ${level}`, 750, 50);
+
 
   return context;
 };

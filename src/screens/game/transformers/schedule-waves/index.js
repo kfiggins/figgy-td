@@ -27,152 +27,58 @@ const test = [
   },
 ]
 
-const wave1 = [
-  {
-    type: ENEMY_TYPES.BLOCK
-  },
-  {
-    type: ENEMY_TYPES.BLOCK
-  },
-  {
-    type: ENEMY_TYPES.BLOCK
-  },
-  {
-    type: ENEMY_TYPES.BLOCK
-  },
-  {
-    type: ENEMY_TYPES.DARTS
-  },
-  {
-    type: ENEMY_TYPES.DARTS
-  },
-  {
-    type: ENEMY_TYPES.DARTS
-  },
-  {
-    type: ENEMY_TYPES.DARTS
-  },
-]
 
-const wave2 = [
-  {
-    type: ENEMY_TYPES.MONOLITHS
-  },
-  {
-    type: ENEMY_TYPES.MONOLITHS
-  },
-  {
-    type: ENEMY_TYPES.MONOLITHS
-  },
-  {
-    type: ENEMY_TYPES.MONOLITHS
-  },
-  {
-    type: ENEMY_TYPES.PIPS
-  },
-  {
-    type: ENEMY_TYPES.PIPS
-  },
-  {
-    type: ENEMY_TYPES.PIPS
-  },
-  {
-    type: ENEMY_TYPES.PIPS
-  },
-]
+const buildEnemies = (types, amount) => {
+  const enemies = []
+  for (let i = 0; i < amount; i++) {
+    enemies.push(...types)
+  }
+  return enemies
+}
 
-const wave3 = [
-  {
-    type: ENEMY_TYPES.ORBITERS
-  },
-  {
-    type: ENEMY_TYPES.ORBITERS
-  },
-  {
-    type: ENEMY_TYPES.ORBITERS
-  },
-  {
-    type: ENEMY_TYPES.ORBITERS
-  },
-  {
-    type: ENEMY_TYPES.BULKS
-  },
-  {
-    type: ENEMY_TYPES.BULKS
-  },
-  {
-    type: ENEMY_TYPES.BULKS
-  },
-  {
-    type: ENEMY_TYPES.BULKS
-  },
-]
+const getNextWave = (level, firstWave) => {
+  const enemyArray = [
+    ENEMY_TYPES.BULKS,
+    ENEMY_TYPES.DARTS,
+    ENEMY_TYPES.ORBITERS,
+    ENEMY_TYPES.PIPS,
+    ENEMY_TYPES.BLOCK,
+    ENEMY_TYPES.MONOLITHS,
+    ENEMY_TYPES.FRACTALS,
+    ENEMY_TYPES.SINGULARITY,
+  ]
 
-const wave4 = [
-  {
-    type: ENEMY_TYPES.FRACTALS
-  },
-  {
-    type: ENEMY_TYPES.FRACTALS
-  },
-  {
-    type: ENEMY_TYPES.FRACTALS
-  },
-  {
-    type: ENEMY_TYPES.FRACTALS
-  },
-  {
-    type: ENEMY_TYPES.SINGULARITY
-  },
-  {
-    type: ENEMY_TYPES.SINGULARITY
-  },
-  {
-    type: ENEMY_TYPES.SINGULARITY
-  },
-  {
-    type: ENEMY_TYPES.SINGULARITY
-  },
-]
 
-const waves = [
-  {
-    enemies: wave1,
-    time: 5,
-  },
-  {
-    enemies: wave2,
-    time: 15,
-  },
-  {
-    enemies: wave3,
-    time: 15,
-  },
-  {
-    enemies: wave4,
-    time: 15,
-  },
-  // {
-  //   enemies: test,
-  //   timer: makeTimer(1000),
-  // },
-]
+
+  const enemies = buildEnemies([{ type: enemyArray[level % enemyArray.length] }], 10)
+
+  return {
+    enemies,
+    time: firstWave ? 3: enemies.length + 3,
+  }
+}
 
 export default (context) => {
-  const { queueEnemies, upcomingWave, deltaTime, waveTimer, lastWave } = context;
+  const { queueEnemies, upcomingWave, deltaTime, waveTimer, lastWave, level, gameStarted } = context;
 
-  if (waveTimer(deltaTime)) {
+  if (!gameStarted) {
+    return context;
+  }
+
+  if (waveTimer(deltaTime) && upcomingWave.time >= 0) {
     upcomingWave.time -= 1;
   }
 
-  if (upcomingWave.time < 0) {
+  if (upcomingWave.time < 0 && !lastWave) {
     upcomingWave.time = 0;
-    const wave = waves.shift()
-    if (wave) {
-      return { ...context, upcomingWave: wave, queueEnemies: [...queueEnemies, ...upcomingWave.enemies] };
-    } else if (!lastWave) {
-      return { ...context, lastWave: true, queueEnemies: [...queueEnemies, ...upcomingWave.enemies] };
-    }
+
+    return {
+      ...context,
+      level: upcomingWave.defaultWave ? 1: level + 1,
+      currentWave: upcomingWave,
+      upcomingWave: getNextWave(level, upcomingWave.defaultWave),
+      queueEnemies: upcomingWave.defaultWave ? [] : [...queueEnemies, ...upcomingWave.enemies],
+    };
   }
   return context;
 };
