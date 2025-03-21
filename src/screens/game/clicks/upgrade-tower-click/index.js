@@ -59,7 +59,7 @@ const basicTowerLevels = {
     bulletDamage: 20,
     bulletSpeed: 6,
     color: "red",
-    cost: 20,
+    cost: 25,
     range: 225,
   },
   3: {
@@ -67,7 +67,7 @@ const basicTowerLevels = {
     bulletDamage: 50,
     bulletSpeed: 7,
     color: "green",
-    cost: 30,
+    cost: 50,
     range: 250,
   },
   4: {
@@ -75,7 +75,7 @@ const basicTowerLevels = {
     bulletDamage: 100,
     bulletSpeed: 8,
     color: "purple",
-    cost: 40,
+    cost: 90,
     range: 275,
   },
   5: {
@@ -83,7 +83,15 @@ const basicTowerLevels = {
     bulletDamage: 200,
     bulletSpeed: 9,
     color: "black",
-    cost: 50,
+    cost: 150,
     range: 300,
+  },
+  6: {
+    bulletCooldown: 5,
+    bulletDamage: 1000,
+    bulletSpeed: 10,
+    color: "white",
+    cost: 400,
+    range: 350,
   },
 };
