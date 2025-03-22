@@ -10,8 +10,7 @@ export default (state, x, y) => {
       game.handleClick(x, y);
       return state;
     case SCREENS.GAME_OVER:
-      const newScreenEnd = end.handleClick(x, y);
-      return newScreenEnd ? { ...state, screen: newScreenEnd } : state;
+      return state;
     default:
       return state;
   }
