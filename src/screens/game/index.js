@@ -27,6 +27,8 @@ const createInitialGameState = () => ({
   player: {
     health: 20,
     gold: 100,
+    goldEarned: 0,
+    goldSpent: 0,
   },
 });
 

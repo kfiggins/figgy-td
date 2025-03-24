@@ -39,7 +39,7 @@ export default (ctx) => {
   const newState = {
     ...state,
     board: { ...state.board, tiles: newTiles },
-    player: { ...state.player, gold: state.player.gold - cost },
+    player: { ...state.player, gold: state.player.gold - cost, goldSpent: state.player.goldSpent + cost },
   };
 
   return { ...ctx, state: newState };

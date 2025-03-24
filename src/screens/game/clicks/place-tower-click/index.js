@@ -42,7 +42,7 @@ export default (ctx) => {
     ...state,
     newTowerPlaced: true,
     board: { ...state.board, tiles: tiles },
-    player: { ...state.player, gold: state.player.gold - TOWER_COST },
+    player: { ...state.player, gold: state.player.gold - TOWER_COST, goldSpent: state.player.goldSpent + TOWER_COST },
   };
 
   return { ...ctx, state: newState };
